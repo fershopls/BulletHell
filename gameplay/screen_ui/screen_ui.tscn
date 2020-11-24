@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://sprites/gui/progress.png" type="Texture" id=1]
+[ext_resource path="res://sprites/gui/progress_over.png" type="Texture" id=2]
+[ext_resource path="res://gameplay/screen_ui/hearts.gd" type="Script" id=3]
+[ext_resource path="res://gameplay/screen_ui/heart.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gameplay/screen_ui/coins.gd" type="Script" id=5]
+[ext_resource path="res://sprites/objects/coin/coin.png" type="Texture" id=6]
+[ext_resource path="res://fonts/casio-fx-9860gii.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://fonts/ponde.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+fallback/0 = ExtResource( 7 )
+
+[node name="screen" type="CanvasLayer"]
+
+[node name="TextureProgress" type="TextureProgress" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -290.0
+margin_top = 16.6555
+margin_right = 290.0
+margin_bottom = 40.6555
+max_value = 1.0
+step = 0.001
+value = 1.0
+texture_under = ExtResource( 1 )
+texture_over = ExtResource( 2 )
+texture_progress = ExtResource( 1 )
+tint_under = Color( 1, 0.690196, 0.690196, 1 )
+tint_progress = Color( 0.623529, 0.25098, 0.25098, 1 )
+nine_patch_stretch = true
+
+[node name="hearts" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -380.0
+margin_top = -64.0
+margin_right = 380.0
+rect_min_size = Vector2( 760, 64 )
+alignment = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="heart" parent="hearts" instance=ExtResource( 4 )]
+margin_left = 280.0
+margin_top = 0.0
+margin_right = 344.0
+margin_bottom = 64.0
+
+[node name="heart2" parent="hearts" instance=ExtResource( 4 )]
+margin_left = 348.0
+margin_top = 0.0
+margin_right = 412.0
+margin_bottom = 64.0
+
+[node name="heart3" parent="hearts" instance=ExtResource( 4 )]
+margin_left = 416.0
+margin_top = 0.0
+margin_right = 480.0
+margin_bottom = 64.0
+
+[node name="coins" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -339.0
+margin_top = 63.6178
+margin_right = 339.0
+margin_bottom = 96.6178
+custom_constants/separation = 32
+alignment = 1
+script = ExtResource( 5 )
+
+[node name="TextureRect" type="TextureRect" parent="coins"]
+margin_left = 294.0
+margin_right = 326.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 6 )
+expand = true
+
+[node name="Label" type="Label" parent="coins"]
+margin_left = 358.0
+margin_right = 384.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 1 )
+text = "0"
+valign = 1
+

@@ -1,0 +1,153 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://gameplay/gameplay.gd" type="Script" id=1]
+[ext_resource path="res://gameplay/camera.gd" type="Script" id=2]
+[ext_resource path="res://animation/camera_shaker.gd" type="Script" id=3]
+[ext_resource path="res://gameplay/flash/gameplay_flash.gd" type="Script" id=4]
+[ext_resource path="res://bullet_container/bullets.gd" type="Script" id=5]
+[ext_resource path="res://object_container/objects.gd" type="Script" id=6]
+[ext_resource path="res://arena/arena.tscn" type="PackedScene" id=7]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=8]
+[ext_resource path="res://gameplay/automatic_shoot.gd" type="Script" id=9]
+[ext_resource path="res://gameplay/boss_container.gd" type="Script" id=10]
+[ext_resource path="res://gameplay/input.gd" type="Script" id=11]
+[ext_resource path="res://gameplay/input/pc_player.gd" type="Script" id=12]
+[ext_resource path="res://gameplay/input/touch_player.gd" type="Script" id=13]
+[ext_resource path="res://sprites/gui/movement_hint.png" type="Texture" id=14]
+[ext_resource path="res://gameplay/input/mouse_player.gd" type="Script" id=15]
+[ext_resource path="res://gameplay/controller.gd" type="Script" id=16]
+[ext_resource path="res://gameplay/controller/controller_boss.gd" type="Script" id=17]
+[ext_resource path="res://gameplay/controller/controller_player.gd" type="Script" id=18]
+[ext_resource path="res://gameplay/controller/controller_object.gd" type="Script" id=19]
+[ext_resource path="res://gameplay/controller/controller_death.gd" type="Script" id=20]
+[ext_resource path="res://gameplay/controller/controller_time.gd" type="Script" id=21]
+[ext_resource path="res://gameplay/controller/controller_cinematic.gd" type="Script" id=22]
+[ext_resource path="res://object_container/object_container.gd" type="Script" id=23]
+[ext_resource path="res://bullet_container/bullet_container.gd" type="Script" id=24]
+[ext_resource path="res://gameplay/collision.gd" type="Script" id=25]
+[ext_resource path="res://gameplay/gui.gd" type="Script" id=26]
+[ext_resource path="res://gameplay/screen_ui/screen_ui.tscn" type="PackedScene" id=27]
+[ext_resource path="res://sfx.gd" type="Script" id=28]
+[ext_resource path="res://sound/hostile_shooted.wav" type="AudioStream" id=29]
+[ext_resource path="res://sound/player_shoot.wav" type="AudioStream" id=30]
+[ext_resource path="res://sound/player_hit.wav" type="AudioStream" id=31]
+[ext_resource path="res://sound/coin_grab.wav" type="AudioStream" id=32]
+
+[node name="gameplay" type="Node"]
+script = ExtResource( 1 )
+
+[node name="camera" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true
+script = ExtResource( 2 )
+
+[node name="camera_shaker" type="Node" parent="camera"]
+script = ExtResource( 3 )
+
+[node name="gameplay_flash" type="CanvasLayer" parent="."]
+script = ExtResource( 4 )
+
+[node name="Polygon2D" type="Polygon2D" parent="gameplay_flash"]
+visible = false
+polygon = PoolVector2Array( -237.307, -131.985, 1950.54, -130.958, 1968.61, 1211.73, -204.991, 1163.57 )
+
+[node name="bullets" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="objects" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="arena" parent="." instance=ExtResource( 7 )]
+
+[node name="player" parent="." instance=ExtResource( 8 )]
+position = Vector2( 231.927, 315.952 )
+
+[node name="automatic_shoot" type="Node" parent="player"]
+script = ExtResource( 9 )
+
+[node name="boss_container" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[node name="spawn" type="Position2D" parent="boss_container"]
+position = Vector2( 384.14, 172.028 )
+
+[node name="input" type="Node" parent="."]
+script = ExtResource( 11 )
+
+[node name="pc_player" type="Node" parent="input"]
+script = ExtResource( 12 )
+
+[node name="touch_player" type="Node" parent="input"]
+script = ExtResource( 13 )
+
+[node name="movement_hint" type="Sprite" parent="input/touch_player"]
+visible = false
+scale = Vector2( 2, 2 )
+z_index = 100
+texture = ExtResource( 14 )
+
+[node name="mouse_player" type="Node2D" parent="input"]
+script = ExtResource( 15 )
+
+[node name="movement_hint" type="Sprite" parent="input/mouse_player"]
+visible = false
+scale = Vector2( 2, 2 )
+z_index = 100
+texture = ExtResource( 14 )
+
+[node name="controller" type="Node" parent="."]
+script = ExtResource( 16 )
+
+[node name="boss" type="Node" parent="controller"]
+script = ExtResource( 17 )
+
+[node name="player" type="Node" parent="controller"]
+script = ExtResource( 18 )
+
+[node name="object" type="Node" parent="controller"]
+script = ExtResource( 19 )
+
+[node name="death" type="Node" parent="controller"]
+script = ExtResource( 20 )
+
+[node name="time" type="Node" parent="controller"]
+script = ExtResource( 21 )
+
+[node name="cinematic" type="Node" parent="controller"]
+script = ExtResource( 22 )
+
+[node name="object_container" type="Node" parent="."]
+script = ExtResource( 23 )
+
+[node name="bullet_container" type="Node" parent="."]
+script = ExtResource( 24 )
+
+[node name="collision" type="Node" parent="."]
+script = ExtResource( 25 )
+
+[node name="gui" type="Node" parent="."]
+script = ExtResource( 26 )
+
+[node name="screen" parent="gui" instance=ExtResource( 27 )]
+
+[node name="sfx" type="Node" parent="."]
+script = ExtResource( 28 )
+
+[node name="hostile_shooted" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource( 29 )
+bus = "Bullets"
+
+[node name="player_shoot" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource( 30 )
+volume_db = -10.0
+bus = "Bullets"
+
+[node name="player_hit" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource( 31 )
+volume_db = -5.0
+bus = "Bullets"
+
+[node name="coin_grab" type="AudioStreamPlayer" parent="sfx"]
+stream = ExtResource( 32 )
+volume_db = -10.0
+bus = "Bullets"
